@@ -19,7 +19,6 @@
 package com.dtstack.flinkx.connector.mysql.source;
 
 import com.dtstack.flinkx.conf.SyncConf;
-import com.dtstack.flinkx.connector.jdbc.source.JdbcInputFormatBuilder;
 import com.dtstack.flinkx.connector.jdbc.source.JdbcSourceFactory;
 import com.dtstack.flinkx.connector.jdbc.util.JdbcUtil;
 import com.dtstack.flinkx.connector.mysql.dialect.MysqlDialect;
@@ -52,10 +51,5 @@ public class MysqlSourceFactory extends JdbcSourceFactory {
     @Override
     protected int getDefaultFetchSize() {
         return DEFAULT_FETCH_SIZE;
-    }
-
-    @Override
-    protected JdbcInputFormatBuilder getBuilder() {
-        return new JdbcInputFormatBuilder(new MysqlInputFormat());
     }
 }

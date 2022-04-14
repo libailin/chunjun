@@ -123,27 +123,26 @@ public class JdbcUtil {
     /**
      * get full column name and type from database
      *
-     * @param cataLog cataLog
      * @param schema schema
      * @param tableName tableName
      * @param dbConn jdbc Connection
      * @return fullColumnList and fullColumnTypeList
      */
     public static Pair<List<String>, List<String>> getTableMetaData(
-            String cataLog, String schema, String tableName, Connection dbConn) {
+            String schema, String tableName, Connection dbConn) {
         try {
             // check table exists
             if (ALL_TABLE.equalsIgnoreCase(tableName.trim())) {
                 return Pair.of(new LinkedList<>(), new LinkedList<>());
             }
 
-            ResultSet tableRs = dbConn.getMetaData().getTables(cataLog, schema, tableName, null);
+            ResultSet tableRs = dbConn.getMetaData().getTables(null, schema, tableName, null);
             if (!tableRs.next()) {
                 String tableInfo = schema == null ? tableName : schema + "." + tableName;
                 throw new FlinkxRuntimeException(String.format("table %s not found.", tableInfo));
             }
 
-            ResultSet rs = dbConn.getMetaData().getColumns(cataLog, schema, tableName, null);
+            ResultSet rs = dbConn.getMetaData().getColumns(null, schema, tableName, null);
             List<String> fullColumnList = new LinkedList<>();
             List<String> fullColumnTypeList = new LinkedList<>();
             while (rs.next()) {
@@ -416,8 +415,7 @@ public class JdbcUtil {
             JdbcConf jdbcConf, JdbcDialect jdbcDialect, RawTypeConverter converter) {
         try (Connection conn = JdbcUtil.getConnection(jdbcConf, jdbcDialect)) {
             Pair<List<String>, List<String>> pair =
-                    JdbcUtil.getTableMetaData(
-                            null, jdbcConf.getSchema(), jdbcConf.getTable(), conn);
+                    JdbcUtil.getTableMetaData(jdbcConf.getSchema(), jdbcConf.getTable(), conn);
             List<String> rawFieldNames = pair.getLeft();
             List<String> rawFieldTypes = pair.getRight();
             return TableUtil.createRowType(rawFieldNames, rawFieldTypes, converter);

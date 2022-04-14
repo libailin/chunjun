@@ -36,7 +36,6 @@ public class KingbaseInputFormat extends JdbcInputFormat {
     @Override
     protected Pair<List<String>, List<String>> getTableMetaData() {
         return JdbcUtil.getTableMetaData(
-                null,
                 StringUtils.upperCase(jdbcConf.getSchema()),
                 StringUtils.upperCase(jdbcConf.getTable()),
                 dbConn);
