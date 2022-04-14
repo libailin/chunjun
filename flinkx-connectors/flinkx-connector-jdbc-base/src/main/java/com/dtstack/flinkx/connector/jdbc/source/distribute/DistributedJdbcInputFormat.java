@@ -160,7 +160,6 @@ public class DistributedJdbcInputFormat extends JdbcInputFormat {
         jdbcConf.setUsername(currentSource.getUserName());
         jdbcConf.setPassword(currentSource.getPassword());
         jdbcConf.setTable(currentSource.getTable());
-        jdbcConf.setSchema(currentSource.getSchema());
         return JdbcUtil.getConnection(jdbcConf, this.jdbcDialect);
     }
 

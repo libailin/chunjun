@@ -40,8 +40,6 @@ public class DataSourceConf implements Serializable {
 
     private String table;
 
-    private String schema;
-
     public String getJdbcUrl() {
         return jdbcUrl;
     }
@@ -74,14 +72,6 @@ public class DataSourceConf implements Serializable {
         this.table = table;
     }
 
-    public String getSchema() {
-        return schema;
-    }
-
-    public void setSchema(String schema) {
-        this.schema = schema;
-    }
-
     @Override
     public String toString() {
         return "DataSourceConf{"
@@ -95,9 +85,6 @@ public class DataSourceConf implements Serializable {
                 + '\''
                 + ", table='"
                 + table
-                + '\''
-                + ", schema='"
-                + schema
                 + '\''
                 + '}';
     }
