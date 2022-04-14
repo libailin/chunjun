@@ -63,7 +63,6 @@ public enum ColumnType {
     SHORT,
     INTEGER,
     NUMBER,
-    NUMERIC,
 
     /** double type */
     DOUBLE,
