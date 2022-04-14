@@ -30,10 +30,10 @@ import org.apache.commons.lang.StringUtils;
  * @author dujie @Description
  * @createTime 2022-01-20 04:17:00
  */
-public class InceptorHdfsInputFormatBuilder extends JdbcInputFormatBuilder {
+public class InceptorInputFormatBuilder extends JdbcInputFormatBuilder {
 
-    public InceptorHdfsInputFormatBuilder() {
-        super(new JdbcInputFormat());
+    public InceptorInputFormatBuilder(JdbcInputFormat format) {
+        super(format);
     }
 
     @Override

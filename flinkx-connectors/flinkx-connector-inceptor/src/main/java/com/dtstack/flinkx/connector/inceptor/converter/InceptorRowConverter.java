@@ -40,11 +40,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 /** @author dujie */
-public class InceptorHdfsRowConverter extends JdbcRowConverter {
+public class InceptorRowConverter extends JdbcRowConverter {
 
     private static final long serialVersionUID = 1L;
 
-    public InceptorHdfsRowConverter(RowType rowType) {
+    public InceptorRowConverter(RowType rowType) {
         super(rowType);
     }
 

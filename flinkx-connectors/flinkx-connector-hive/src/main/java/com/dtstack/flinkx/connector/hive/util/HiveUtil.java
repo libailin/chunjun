@@ -77,10 +77,11 @@ public class HiveUtil {
             TableInfo tableInfo,
             String schema,
             ConnectionInfo connectionInfo,
-            DistributedCache distributedCache) {
+            DistributedCache distributedCache,
+            String jobId) {
         Connection connection = null;
         try {
-            connection = HiveDbUtil.getConnection(connectionInfo, distributedCache);
+            connection = HiveDbUtil.getConnection(connectionInfo, distributedCache, jobId);
             if (StringUtils.isNotBlank(schema)) {
                 HiveDbUtil.executeSqlWithoutResultSet(connectionInfo, connection, "use " + schema);
             }
@@ -100,10 +101,11 @@ public class HiveUtil {
             String schema,
             String partition,
             ConnectionInfo connectionInfo,
-            DistributedCache distributedCache) {
+            DistributedCache distributedCache,
+            String jobId) {
         Connection connection = null;
         try {
-            connection = HiveDbUtil.getConnection(connectionInfo, distributedCache);
+            connection = HiveDbUtil.getConnection(connectionInfo, distributedCache, jobId);
             if (StringUtils.isNotBlank(schema)) {
                 HiveDbUtil.executeSqlWithoutResultSet(connectionInfo, connection, "use " + schema);
             }

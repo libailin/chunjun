@@ -54,6 +54,8 @@ import java.util.Properties;
  */
 public abstract class JdbcSinkFactory extends SinkFactory {
 
+    private static final int DEFAULT_CONNECTION_TIMEOUT = 600;
+
     protected JdbcConf jdbcConf;
     protected JdbcDialect jdbcDialect;
 
@@ -68,7 +70,7 @@ public abstract class JdbcSinkFactory extends SinkFactory {
                                 new FieldNameExclusionStrategy("column"))
                         .create();
         GsonUtil.setTypeAdapter(gson);
-        jdbcConf = gson.fromJson(gson.toJson(syncConf.getWriter().getParameter()), getConfClass());
+        jdbcConf = gson.fromJson(gson.toJson(syncConf.getWriter().getParameter()), JdbcConf.class);
         int batchSize =
                 syncConf.getWriter()
                         .getIntVal(
@@ -94,6 +96,11 @@ public abstract class JdbcSinkFactory extends SinkFactory {
     @Override
     public DataStreamSink<RowData> createSink(DataStream<RowData> dataSet) {
         JdbcOutputFormatBuilder builder = getBuilder();
+
+        int connectTimeOut = jdbcConf.getConnectTimeOut();
+        jdbcConf.setConnectTimeOut(
+                connectTimeOut == 0 ? DEFAULT_CONNECTION_TIMEOUT : connectTimeOut);
+
         builder.setJdbcConf(jdbcConf);
         builder.setJdbcDialect(jdbcDialect);
 
@@ -112,10 +119,6 @@ public abstract class JdbcSinkFactory extends SinkFactory {
     @Override
     public RawTypeConverter getRawTypeConverter() {
         return jdbcDialect.getRawTypeConverter();
-    }
-
-    protected Class<? extends JdbcConf> getConfClass() {
-        return JdbcConf.class;
     }
 
     /**
